@@ -1,34 +1,23 @@
 
 <!DOCTYPE html>
-
 <html>
-
     <title>Calculadora de Conjuntos</title>
-
-    <head>
-    </head>
-
+    <head>    </head>
     
+    <link rel="stylesheet" type="text/css" href="style.css"  />
 <body>
-
-        <input id='input_conjunto_a' placeholder='1er Conjunto'>
-
-        <input id='input_conjunto_b' placeholder='2do Conjunto'>
-
+        <label>Conjunto Universal (U): </label><input id='input_conjunto_universal' placeholder='Conjunto Universal'>
           <br  /><br  />
-
-        <button onclick='output_result.innerHTML = `${union()}`'>Union</button>
-
-        <button onclick='output_result.innerHTML = `${diferencia()}`'>Diferencia</button>
-
+        <label>Conjunto A: </label><input id='input_conjunto_a' placeholder='1er Conjunto'>
+        <label>Conjunto B: </label><input id='input_conjunto_b' placeholder='2do Conjunto'>
+          <br  /><br  />
+        <button onclick='`${interseccion()}`'>Interseccion (&#8745;)</button>
+        <button onclick='`${union()}`'>Union (&#8746;)</button>
+        <button onclick='`${diferencia()}`'>Diferencia (-)</button>
+        <button onclick='`${complemento()}`'>Complemento</button>
           <br  />
-
+        <p id='output_operation'># ! #</p>
         <p id="output_result">#</p>
-
-
         <script src="script.js"></script>
-
     </body>
-
-
 </html>

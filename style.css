@@ -1,0 +1,13 @@
+
+body{
+  background-color: black;
+  color: lime;
+}
+
+input, button{
+  background-color: lightgray;
+}
+
+input placeholder{
+  color: black;
+}
