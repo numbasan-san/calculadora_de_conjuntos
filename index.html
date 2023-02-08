@@ -6,18 +6,30 @@
     
     <link rel="stylesheet" type="text/css" href="style.css"  />
 <body>
-        <label>Conjunto Universal (U): </label><input id='input_conjunto_universal' placeholder='Conjunto Universal'>
-          <br  /><br  />
-        <label>Conjunto A: </label><input id='input_conjunto_a' placeholder='1er Conjunto'>
-        <label>Conjunto B: </label><input id='input_conjunto_b' placeholder='2do Conjunto'>
-          <br  /><br  />
-        <button onclick='`${interseccion()}`'>Interseccion (&#8745;)</button>
-        <button onclick='`${union()}`'>Union (&#8746;)</button>
-        <button onclick='`${diferencia()}`'>Diferencia (-)</button>
-        <button onclick='`${complemento()}`'>Complemento</button>
-          <br  />
-        <p id='output_operation'># ! #</p>
-        <p id="output_result">#</p>
+        <p>
+          Aviso: Todos los elementos no deben llevar espacios. Ejem: q,w,e,r,t,y.
+        </p>
+        <div>        
+          <label>Conjunto Universal (U): </label><input id='input_conjunto_universal' placeholder='Conjunto Universal'>
+            <br  /><br  />
+          <label>Conjunto A: </label><input id='input_conjunto_a' placeholder='1er Conjunto'>
+          <label>Conjunto B: </label><input id='input_conjunto_b' placeholder='2do Conjunto'>
+            <br  /><br  />
+          <button onclick='`${interseccion()}`'>Interseccion (&#8745;)</button>
+          <button onclick='`${union()}`'>Union (&#8746;)</button>
+          <button onclick='`${diferencia()}`'>Diferencia (-)</button>
+          <button onclick='`${complemento()}`'>Complemento</button>
+          <button onclick='`${dife_sime()}`'>Dife. Dimétrica (&#8710;)</button>
+            <br  />
+          <p id='output_operation'># ! #</p>
+          <p id="output_result">#</p>
+        </div>
+        <div>
+          <label>Ingrese los conjuntos que va utilizar:</label>
+          <input id='input_conjuntos'>
+          <button onclick='`${imprimir()}`'>Imprimir</button>
+           <ol type="A" id='output_conjuntos'></ol>
+        </div>
         <script src="script.js"></script>
     </body>
 </html>
