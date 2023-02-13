@@ -3,18 +3,20 @@ var input_conjunto_a = (document.getElementById('input_conjunto_a'));
 var input_conjunto_b = (document.getElementById('input_conjunto_b'));
 var input_conjunto_universal = (document.getElementById('input_conjunto_universal'));
 var input_conjuntos = (document.getElementById('input_conjuntos'));
+var input_elemento = (document.getElementById('input_elemento'));
 
 var output_result = document.getElementById('output_result');
 var output_operation = document.getElementById('output_operation');
 var output_conjuntos = document.getElementById('output_conjuntos');
 
-var conjunto_a, conjunto_b, conjunto_universal;
+var conjunto_a, conjunto_b, conjunto_universal, elemento;
 var result;
 
 function variables_prepare() {
   conjunto_a = (input_conjunto_a.value).split(',');
   conjunto_b = (input_conjunto_b.value).split(',');
   conjunto_universal = (input_conjunto_universal.value).split(',');
+	elemento = (input_elemento.value);
   result = [];
 }
 
@@ -91,4 +93,20 @@ function dife_sime() {
 
 function imprimir(){
 	output_conjuntos.innerHTML += '<li>' + input_conjuntos.value + '</li>';
+}
+
+function pertenencia(){
+	variables_prepare();
+  simbolo = '';
+  verdad = '';
+  
+  if ((conjunto_a.includes(elemento))) {
+      simbolo = '&#8712;'; // Pertenece
+      verdad = 'V';
+  } else {
+      simbolo = '&#8713;'; // No Pertenece
+      verdad = 'F';
+  }
+  output_operation.innerHTML = elemento + ' ' + simbolo + ' A =';
+  output_result.innerHTML = '' + verdad + '';
 }
