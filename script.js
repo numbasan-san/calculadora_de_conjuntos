@@ -19,24 +19,24 @@ var btn_instructions = document.getElementById('btn_instructions');
 var chb_a_value = document.getElementById('chb_a_value');
 var chb_b_value = document.getElementById('chb_b_value');
 
-var conjunto_a, conjunto_b, conjunto_universal, elemento;
+var conjunto_a, conjunto_b, nombre_a, nombre_b, conjunto_universal, elemento;
 var result;
 let biblioteca_conjuntos = [];
 
 /*
-	Son para las funciones del "botón" "funciones".
+	Son para las funciones del "botï¿½n" "funciones".
 */
 function instructions() {
   btn_instructions.setAttribute("onClick", "clean_instr()");
   btn_instructions.innerHTML = "Limpiar Instructivo";
   output_instructions.innerHTML =
     '<hr  />Instrucciones: <ul><li>Los conjuntos a calcular deben ir en las entradas "Conjunto A" y "Conjunto B" si no son el conjunto Universal. En dado caso, debe ir en su respectiva entrada.</li>' +
-    '<li>Deber&#225; especificar si los valores ingresados en las entradas "Conjunto A" y "Conjunto B" son independientes marcando los botones al lado de las entradas. Si no lo est&#225;n, entonces lo que se haya ingresado no se tratar&#225; como un valor independiente, sino como un "nombre de conjunto" y ser&#225; buscado en el listado de los conjuntos ingresados en el &#225;rea de la derecha. La opción ya está marcada predeterminandamente.</li>' +
+    '<li>Deber&#225; especificar si los valores ingresados en las entradas "Conjunto A" y "Conjunto B" son independientes marcando los botones al lado de las entradas. Si no lo est&#225;n, entonces lo que se haya ingresado no se tratar&#225; como un valor independiente, sino como un "nombre de conjunto" y ser&#225; buscado en el listado de los conjuntos ingresados en el &#225;rea de la derecha. La opci&#243;n ya est&#225; marcada predeterminadamente.</li>' +
     '<li>Todas las operaciones trabajan con el valor asociado a la entrada "Conjunto A" como conjunto principal, con excepciones, por lo que el valor que quieras calcular deber&#225; ir en esa entrada.</li> ' +
     '<li>Las operaciones que trabajan con las entradas "Conjunto A" y "Conjunto B" son: <ol><li>Intersecci&#243;n.</li><li>Uni&#243;n.</li><li>Diferencia.</li><li>Diferencia Sim&#233;trica.</li></ol>Por otra parte, Complemento trabaja con el Conjunto Universal en vez del Conjunto B.</li> ' +
-    '<li>La entrada "Elemento" est&#225; para la operaci&#243;n "Pertenencia" que calcular&#225; si el elemento ingresado pertenece al conjunto ingresado en la entrada "Conjunto 2".</li>' +
+    '<li>La entrada "Elemento" est&#225; para la operaci&#243;n "Pertenencia" que calcular&#225; si el elemento ingresado pertenece al conjunto ingresado en la entrada "Conjunto A".</li>' +
     '<li>La operaci&#243;n potencia trabaja con el valor en "Conjunto A".</li>' +
-    '<li>Las entradas de la derecha est&#225;n para enlistar los conjuntos que se usar&#225;n frecuentemente o para cuando se fueren a usar muchos conjuntos, con su respectivo nombre y valor. Deber&#225; desmarcar el botón al lado de la entrada que corresponda e ingresar el nombre del conjunto en la entrada que considere en caso de querer usar un valor de los ingresados en el listado de conjuntos.</li></ul><hr  />' +
+    '<li>Las entradas de la derecha est&#225;n para enlistar los conjuntos que se usar&#225;n frecuentemente o para cuando se fueren a usar muchos conjuntos, con su respectivo nombre y valor. Deber&#225; desmarcar el bot&#243;n al lado de la entrada que corresponda e ingresar el nombre del conjunto en la entrada que considere en caso de querer usar un valor de los ingresados en el listado de conjuntos.</li></ul><hr  />' +
     'NOTA: Para las operaciones como las de conjunto primo, simplemente calcule la diferencia con el conjunto Universal o "Conjunto B" seg&#250;n convenga.<hr  />';
 }
 
@@ -47,11 +47,13 @@ function clean_instr() {
 }
 
 /*
-	Se preparan las varaibles que se usarán.
+	Se preparan las varaibles que se usarï¿½n.
 */
 chb_a_value.addEventListener("change", is_true_checkbox_a, false);
 chb_b_value.addEventListener("change", is_true_checkbox_b, false);
 
+// Se verifica si el conjunto ingresado es un valor o 
+// un conjunto ya enlistado por medio de los checkbox.
 function is_true_checkbox_a() {
   var checked_a = chb_a_value.checked;
   if (checked_a) {
@@ -70,6 +72,7 @@ function is_true_checkbox_b() {
   }
 }
 
+// Se alista el valor del conjunto en turno.
 function value_set_a(input) {
   if (input) {
     return (input_conjunto_a.value).split(',');
@@ -96,9 +99,39 @@ function value_set_b(input) {
   }
 }
 
+// Se alista el nombre del conjunto en turno.
+function name_set_a(input){
+  if (!(input)) {
+    for (var i = 0; i < biblioteca_conjuntos.length; i++) {
+      var conjunto = biblioteca_conjuntos[i];
+      if (conjunto.nombre == input_conjunto_a.value) {
+        return conjunto.nombre;
+      }
+    }
+  } else{
+    return 'A';
+  }
+}
+
+function name_set_b(input){
+  if (!(input)) {
+    for (var i = 0; i < biblioteca_conjuntos.length; i++) {
+      var conjunto = biblioteca_conjuntos[i];
+      if (conjunto.nombre == input_conjunto_b.value) {
+        return conjunto.nombre;
+      }
+    }
+  } else{
+    return 'B';
+  }
+}
+
+// Se termina de alistar la variables para su uso.
 function variables_prepare() {
   conjunto_a = value_set_a(is_true_checkbox_a());
   conjunto_b = value_set_b(is_true_checkbox_b());
+  nombre_a = name_set_a(is_true_checkbox_a());
+  nombre_b =name_set_b(is_true_checkbox_b());
   conjunto_universal = (input_conjunto_universal.value).split(',');
   elemento = (input_elemento.value);
   result = [];
@@ -114,7 +147,7 @@ function interseccion() {
       result.push(conjunto_a[i]);
     }
   }
-  output_operation.innerHTML = 'A &#8745; B =';
+  output_operation.innerHTML = nombre_a + ' &#8745; ' + nombre_b + ' =';
   output_result.innerHTML = '{' + result + '}';
 }
 
@@ -131,7 +164,7 @@ function union() {
   result = cleaner.filter((item, index) => {
     return cleaner.indexOf(item) === index;
   });
-  output_operation.innerHTML = 'A &#8746; B ='; /* El c?digo es para el s?mbolo de la uni?n de conjuntos */
+  output_operation.innerHTML = nombre_a + ' &#8746; ' + nombre_b + ' ='; /* El c?digo es para el s?mbolo de la uni?n de conjuntos */
   output_result.innerHTML = '{' + result + '}';
 }
 
@@ -142,7 +175,7 @@ function diferencia() {
       result.push(conjunto_a[i]);
     }
   }
-  output_operation.innerHTML = 'A - B =';
+  output_operation.innerHTML = nombre_a + ' - ' + nombre_b + ' =';
   output_result.innerHTML = '{' + result + '}';
 }
 
@@ -158,7 +191,7 @@ function dife_sime() {
       result.push(conjunto_b[i]);
     }
   }
-  output_operation.innerHTML = 'A &#8710; B =';
+  output_operation.innerHTML = nombre_a + ' &#8710; ' + nombre_b + ' =';
   output_result.innerHTML = '{' + result + '}';
 }
 
@@ -173,7 +206,7 @@ function complemento() {
   result = cleaner.filter((item, index) => {
     return cleaner.indexOf(item) === index;
   });
-  output_operation.innerHTML = 'A - U = ';
+  output_operation.innerHTML = nombre_a + ' - U = ';
   output_result.innerHTML = '{' + result + '}';
 }
 
@@ -192,28 +225,39 @@ function pertenencia() {
   if (elemento == ''){
   	elemento = '&#216;';
   }
-  output_operation.innerHTML = elemento + ' ' + simbolo + ' A =';
+  output_operation.innerHTML = elemento + ' ' + simbolo + ' ' + nombre_a + ' =';
   output_result.innerHTML = '' + verdad + '';
 }
 
 function potencia() {
   variables_prepare();
-  combo = conjunto_a.reduce((a, v) => a.concat(a.map(d => [v].concat(d))), [
-    []
-  ]);
-  result = combo.values();
+  if (conjunto_a == '' || conjunto_a == ' '){
+    output_operation.innerHTML = 'P(' + nombre_a + ') =';
+    output_result.innerHTML = '';
+    output_result.innerHTML = '{{&#216;}}';
+  } else {
+    combo = conjunto_a.reduce((a, v) => a.concat(a.map(d => [v].concat(d))), [
+      []
+    ]);
+    combo[0] = '&#216;';
+    result = combo.values();
 
-  output_operation.innerHTML = 'P(A) =';
-  output_result.innerHTML = '';
-  output_result.innerHTML += '{';
-  for (i = 0; i < combo.length; i++) {
-  	output_result.innerHTML += '{' + result.next().value + '},\n';
+    output_operation.innerHTML = 'P(' + nombre_a + ') =';
+    output_result.innerHTML = '';
+    output_result.innerHTML += '{';
+    for (i = 0; i < combo.length; i++) {
+      if (i == (combo.length - 1)){
+        output_result.innerHTML += '{' + result.next().value + '}';
+      } else {
+        output_result.innerHTML += '{' + result.next().value + '}, ';
+      }
+    }
+    output_result.innerHTML += '}';
   }
-  output_result.innerHTML += '}';
 }
 
 /*
-	Es para que se puedan imprimir los conjuntos a modo de listado y que se puedan almacenar para un uso práctico.
+	Es para que se puedan imprimir los conjuntos a modo de listado y que se puedan almacenar para un uso prï¿½ctico.
 */
 function imprimir() {
   if (input_conjuntos.value == '') {
@@ -235,8 +279,3 @@ class Conjunto {
     this.valor = valor;
   }
 }
-
-/* function prueba(){
-	variables_prepare();
-	console.log(conjunto_a);
-} */
